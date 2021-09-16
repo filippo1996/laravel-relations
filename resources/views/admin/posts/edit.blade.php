@@ -23,6 +23,24 @@
           @enderror
 
         </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select class="form-select" name="category_id" id="category">
+            <option value="">-- Seleziona una Categoria --</option>
+
+            @foreach($categories as $category)
+              <option value="{{ $category->id }}" 
+                @if($category->id == old('category_id', $post->category->id ?? null)) selected @endif
+                >{{ $category->name }}</option>
+            @endforeach
+
+          </select>
+
+          @error('category')
+            <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+
+        </div>
         <div class="form-floating mb-3">
             <textarea class="form-control" name="content" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{ old('content', $post->content) }}</textarea>
             <label for="floatingTextarea2">Comments</label>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -18,7 +19,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category')->get();
+        //$posts = Post::all();
+        //dd($posts->load('category'));
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -30,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create',compact('categories'));
     }
 
     /**
@@ -55,7 +59,7 @@ class PostController extends Controller
             App::abort(500, 'Error');
         }
 
-        return redirect()->route('posts.show', $post->id);
+        return redirect()->route('posts.show', $post->slug);
 
     }
 
@@ -78,7 +82,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**

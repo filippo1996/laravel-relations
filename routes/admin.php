@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,10 @@ use App\Http\Controllers\Admin\PostController;
 
 Route::get('/', [HomeController::class, 'index'])->name('dashboard.index');
 
-Route::resource('posts', PostController::class);
+// Routing for the controller Post
+Route::resource('posts', PostController::class, ['except'=>['show','edit']]);
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post:slug}/edit', [PostController::class, 'edit'])->name('posts.edit');
+
+// Routing for the controller Category
+Route::resource('category', CategoryController::class);

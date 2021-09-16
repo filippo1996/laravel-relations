@@ -13,6 +13,12 @@
             Posts
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('category.index') }}">
+            <span data-feather="categories"></span>
+            Categories
+          </a>
+        </li>
       </ul>
     </div>
 </nav>
